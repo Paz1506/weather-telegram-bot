@@ -20,11 +20,9 @@ import lombok.Setter;
 public class Main {
 
     /** текущая температура */
-//    @JsonProperty(value = "temp")
     private Double temp;
 
     /** давление */
-//    @JsonProperty(value = "pressure")
     private Integer pressure;
 
     /** минимальная температура */
@@ -36,6 +34,5 @@ public class Main {
     private Double tempMax;
 
     /** давление */
-//    @JsonProperty(value = "humidity")
     private Integer humidity;
 }

@@ -16,4 +16,11 @@ public interface OpenWeatherFeignClient {
                                          @RequestParam(name = "appid") String appId,
                                          @RequestParam(name = "units") String units,
                                          @RequestParam(name = "lang") String lang);
+
+    @GetMapping(value = "/weather", consumes = "application/json")
+    WeatherInfo getWeatherInfoByCoords(@RequestParam(name = "lat") Double lat,
+                                       @RequestParam(name = "lon") Double lon,
+                                       @RequestParam(name = "appid") String appId,
+                                       @RequestParam(name = "units") String units,
+                                       @RequestParam(name = "lang") String lang);
 }

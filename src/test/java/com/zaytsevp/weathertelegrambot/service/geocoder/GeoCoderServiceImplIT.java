@@ -1,7 +1,6 @@
-package com.zaytsevp.weathertelegrambot.service;
+package com.zaytsevp.weathertelegrambot.service.geocoder;
 
-import com.zaytsevp.weathertelegrambot.model.weather.WeatherInfo;
-import com.zaytsevp.weathertelegrambot.service.weather.WeatherService;
+import com.zaytsevp.weathertelegrambot.model.geocoder.MainGeoResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +10,17 @@ import org.telegram.telegrambots.ApiContextInitializer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WeatherServiceImplIT {
+public class GeoCoderServiceImplIT {
 
     @Autowired
-    private WeatherService weatherService;
+    private GeoCoderService geoCoderService;
 
     static {
         ApiContextInitializer.init();
     }
 
     @Test
-    public void getWeatherInfoByCityName() {
-        // TODO
+    public void getGeoInfoByCityName() {
+        //TODO
     }
 }

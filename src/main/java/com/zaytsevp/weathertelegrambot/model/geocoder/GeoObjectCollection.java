@@ -1,6 +1,7 @@
-package com.zaytsevp.weathertelegrambot.model.weather;
+package com.zaytsevp.weathertelegrambot.model.geocoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,6 @@ import lombok.Setter;
 import java.util.List;
 
 /**
- * Составная информация о погоде
- *
  * @author Pavel Zaytsev
  */
 @Getter
@@ -18,11 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WeatherInfo {
+public class GeoObjectCollection {
 
-    /** общая информация о температуре */
-    private Main main;
-
-    /** общая информация о погоде */
-    private List<Weather> weather;
+    @JsonProperty("featureMember")
+    private List<FeatureMember> featureMember;
 }

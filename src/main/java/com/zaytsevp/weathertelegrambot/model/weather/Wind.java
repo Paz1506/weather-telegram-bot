@@ -20,6 +20,5 @@ import lombok.Setter;
 public class Wind {
 
     /** скорость ветра */
-//    @JsonProperty(value = "speed")
     private Double speed;
 }

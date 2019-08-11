@@ -10,4 +10,6 @@ import com.zaytsevp.weathertelegrambot.model.weather.WeatherInfo;
 public interface WeatherService {
 
     WeatherInfo getWeatherInfoByCityName(String cityName);
+
+    WeatherInfo getWeatherInfoByCityCoords(Double lat, Double lng);
 }
