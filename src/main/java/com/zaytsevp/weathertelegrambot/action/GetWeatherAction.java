@@ -47,6 +47,7 @@ public class GetWeatherAction {
                              "%s\n" +
                              "Населенный пункт %s - %s." +
                              "\nТемпература: %s градусов." +
+                             "\nВетер: %d м/с." +
                              "\nОтносительная влажность: %s %%." +
                              "\nДавление: %s мм.",
                              getUsername(update),
@@ -55,6 +56,7 @@ public class GetWeatherAction {
                              localityName,
                              weatherInfoByCityName.getWeather().get(0).getDescription(),
                              weatherInfoByCityName.getMain().getTemp(),
+                             weatherInfoByCityName.getWind().getSpeed().intValue(),
                              weatherInfoByCityName.getMain().getHumidity(),
                              weatherInfoByCityName.getMain().getPressure());
     }

@@ -25,4 +25,7 @@ public class WeatherInfo {
 
     /** общая информация о погоде */
     private List<Weather> weather;
+
+    /** ветер */
+    private Wind wind;
 }
