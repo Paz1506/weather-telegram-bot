@@ -1,5 +1,6 @@
 package com.zaytsevp.weathertelegrambot.action;
 
+import com.zaytsevp.weathertelegrambot.model.geocoder.LocalityWithCoordsProjection;
 import com.zaytsevp.weathertelegrambot.model.telegram.MessageParameterType;
 import com.zaytsevp.weathertelegrambot.model.telegram.WeatherCodeEmojiLocator;
 import com.zaytsevp.weathertelegrambot.model.weather.WeatherInfo;
@@ -38,10 +39,10 @@ public class GetWeatherAction {
 
         String localityName = weatherParams.get(MessageParameterType.CITY);
 
-        Map<String, Double> geoCoordsByCityName = geoCoderService.getGeoCoordsByCityName(localityName);
+        LocalityWithCoordsProjection geoInfoByCityName = geoCoderService.getGeoCoordsByCityName(localityName);
 
-        WeatherInfo weatherInfoByCityName = getWeatherInfoByCoords(geoCoordsByCityName.get("lat"),
-                                                                   geoCoordsByCityName.get("lon"));
+        WeatherInfo weatherInfoByCityName = getWeatherInfoByCoords(geoInfoByCityName.getCoords().get("lat"),
+                                                                   geoInfoByCityName.getCoords().get("lon"));
 
         return String.format("Уважаемый %s, прогноз погоды на %s:\n" +
                              "%s\n" +
@@ -53,7 +54,7 @@ public class GetWeatherAction {
                              getUsername(update),
                              "сегодня",
                              weatherCodeEmojiLocator.getWeatherEmojiByWeatherCode(weatherInfoByCityName.getWeather().get(0).getId()),
-                             localityName,
+                             geoInfoByCityName.getLocalityName(),
                              weatherInfoByCityName.getWeather().get(0).getDescription(),
                              weatherInfoByCityName.getMain().getTemp(),
                              weatherInfoByCityName.getWind().getSpeed().intValue(),

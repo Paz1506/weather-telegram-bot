@@ -17,6 +17,9 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GeoObject {
 
+    @JsonProperty("name")
+    private String name;
+
     @JsonProperty("metaDataProperty")
     private MetaDataProperty metaDataProperty;
 

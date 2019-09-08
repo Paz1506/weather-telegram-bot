@@ -4,6 +4,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableMap;
 import com.zaytsevp.weathertelegrambot.feign.geocoder.YandexGeocoderFeignClient;
 import com.zaytsevp.weathertelegrambot.model.geocoder.FeatureMember;
+import com.zaytsevp.weathertelegrambot.model.geocoder.LocalityWithCoordsProjection;
 import com.zaytsevp.weathertelegrambot.model.geocoder.MainGeoResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class GeoCoderServiceImpl implements GeoCoderService {
     }
 
     @Override
-    public Map<String, Double> getGeoCoordsByCityName(String cityName) {
+    public LocalityWithCoordsProjection getGeoCoordsByCityName(String cityName) {
         MainGeoResponse weatherInfoByCityName = yandexGeocoderFeignClient.getLocalityCoordsByName(cityName, apikey, resultsCount, locality);
 
         List<FeatureMember> featureMembers = weatherInfoByCityName.getResponse()
@@ -44,7 +45,12 @@ public class GeoCoderServiceImpl implements GeoCoderService {
                                                                   .getFeatureMember();
 
         if (featureMembers.size() > 0) {
-            return getCoords(getCorrectFeatureMember(featureMembers));
+            FeatureMember correctFeatureMember = getCorrectFeatureMember(featureMembers);
+
+            return LocalityWithCoordsProjection.builder()
+                                               .localityName(correctFeatureMember.getGeoObject().getName())
+                                               .coords(getCoords(correctFeatureMember))
+                                               .build();
         }
 
         throw new IllegalArgumentException("Город не найден!");

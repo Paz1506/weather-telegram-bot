@@ -1,10 +1,10 @@
 package com.zaytsevp.weathertelegrambot.service.geocoder;
 
-import java.util.Map;
+import com.zaytsevp.weathertelegrambot.model.geocoder.LocalityWithCoordsProjection;
 
 /**
  * @author Pavel Zaytsev
  */
 public interface GeoCoderService {
-    Map<String, Double> getGeoCoordsByCityName(String cityName);
+    LocalityWithCoordsProjection getGeoCoordsByCityName(String cityName);
 }

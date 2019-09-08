@@ -2,12 +2,11 @@ package com.zaytsevp.weathertelegrambot.service.geocoder;
 
 import com.zaytsevp.weathertelegrambot.feign.geocoder.YandexGeocoderFeignClient;
 import com.zaytsevp.weathertelegrambot.model.geocoder.FeatureMember;
+import com.zaytsevp.weathertelegrambot.model.geocoder.LocalityWithCoordsProjection;
 import com.zaytsevp.weathertelegrambot.model.geocoder.MainGeoResponse;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
-
-import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -23,6 +22,8 @@ public class GeoCoderServiceImplTest {
 
     private final String cityName = "cityName";
 
+    private final LocalityWithCoordsProjection localityWithCoordsProjection = mock(LocalityWithCoordsProjection.class, RETURNS_DEEP_STUBS);
+
     private final MainGeoResponse mainGeoResponse = mock(MainGeoResponse.class, RETURNS_DEEP_STUBS);
 
     private final FeatureMember featureMember = mock(FeatureMember.class, RETURNS_DEEP_STUBS);
@@ -37,9 +38,13 @@ public class GeoCoderServiceImplTest {
 
     private final String locality = "locality";
 
+    private final String localityName = "name";
+
     @Test
     public void getGeoCoordsByCityName() {
         // Arrange
+        when(featureMember.getGeoObject().getName()).thenReturn(localityName);
+
         when(featureMember.getGeoObject()
                           .getMetaDataProperty()
                           .getGeocoderMetaData()
@@ -56,17 +61,17 @@ public class GeoCoderServiceImplTest {
         when(yandexGeocoderFeignClient.getLocalityCoordsByName(anyString(), anyString(), anyInt(), anyString())).thenReturn(mainGeoResponse);
 
         // Actual
-        Map<String, Double> actualResult = geoCoderService.getGeoCoordsByCityName(cityName);
+        LocalityWithCoordsProjection actualResult = geoCoderService.getGeoCoordsByCityName(cityName);
 
         // Assertion
-        Assertions.assertThat(actualResult).isNotEmpty();
-        Assertions.assertThat(actualResult.size()).isEqualTo(2);
-        Assertions.assertThat(actualResult.containsKey("lat")).isTrue();
-        Assertions.assertThat(actualResult.containsKey("lon")).isTrue();
-        Assertions.assertThat(actualResult.get("lon")).isEqualTo(lon);
-        Assertions.assertThat(actualResult.get("lat")).isEqualTo(lat);
+        Assertions.assertThat(actualResult.getCoords()).isNotEmpty();
+        Assertions.assertThat(actualResult.getCoords().size()).isEqualTo(2);
+        Assertions.assertThat(actualResult.getCoords().containsKey("lat")).isTrue();
+        Assertions.assertThat(actualResult.getCoords().containsKey("lon")).isTrue();
+        Assertions.assertThat(actualResult.getCoords().get("lon")).isEqualTo(lon);
+        Assertions.assertThat(actualResult.getCoords().get("lat")).isEqualTo(lat);
+        Assertions.assertThat(actualResult.getLocalityName()).isEqualTo(localityName);
 
         verify(yandexGeocoderFeignClient).getLocalityCoordsByName(cityName, apiKey, 10, "locality");
-        ;
     }
 }
