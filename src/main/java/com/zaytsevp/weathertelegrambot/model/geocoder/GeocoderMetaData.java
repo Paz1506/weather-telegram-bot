@@ -15,14 +15,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GeoObject {
+public class GeocoderMetaData {
 
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("metaDataProperty")
-    private MetaDataProperty metaDataProperty;
-
-    @JsonProperty("Point")
-    private Point point;
+    @JsonProperty("kind")
+    private String kind;
 }
