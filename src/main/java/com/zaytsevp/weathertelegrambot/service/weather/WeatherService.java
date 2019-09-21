@@ -1,5 +1,6 @@
 package com.zaytsevp.weathertelegrambot.service.weather;
 
+import com.zaytsevp.weathertelegrambot.model.weather.ForecastWeatherInfo;
 import com.zaytsevp.weathertelegrambot.model.weather.WeatherInfo;
 
 /**
@@ -12,4 +13,6 @@ public interface WeatherService {
     WeatherInfo getWeatherInfoByCityName(String cityName);
 
     WeatherInfo getWeatherInfoByCityCoords(Double lat, Double lng);
+
+    ForecastWeatherInfo getForecastWeatherInfoByCoords(Double lat, Double lng);
 }

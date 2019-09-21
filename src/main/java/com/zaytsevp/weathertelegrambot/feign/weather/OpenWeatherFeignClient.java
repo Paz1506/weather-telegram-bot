@@ -1,5 +1,6 @@
 package com.zaytsevp.weathertelegrambot.feign.weather;
 
+import com.zaytsevp.weathertelegrambot.model.weather.ForecastWeatherInfo;
 import com.zaytsevp.weathertelegrambot.model.weather.WeatherInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,4 +24,11 @@ public interface OpenWeatherFeignClient {
                                        @RequestParam(name = "appid") String appId,
                                        @RequestParam(name = "units") String units,
                                        @RequestParam(name = "lang") String lang);
+
+    @GetMapping(value = "/forecast", consumes = "application/json")
+    ForecastWeatherInfo getForecastWeatherInfoByCoords(@RequestParam(name = "lat") Double lat,
+                                                       @RequestParam(name = "lon") Double lon,
+                                                       @RequestParam(name = "appid") String appId,
+                                                       @RequestParam(name = "units") String units,
+                                                       @RequestParam(name = "lang") String lang);
 }

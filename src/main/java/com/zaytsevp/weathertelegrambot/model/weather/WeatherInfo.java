@@ -20,6 +20,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherInfo {
 
+    /** время прогноза UTC (forecast) */
+    private Long dt;
+
     /** общая информация о температуре */
     private Main main;
 

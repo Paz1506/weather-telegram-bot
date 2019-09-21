@@ -1,6 +1,7 @@
 package com.zaytsevp.weathertelegrambot.service.weather;
 
 import com.zaytsevp.weathertelegrambot.feign.weather.OpenWeatherFeignClient;
+import com.zaytsevp.weathertelegrambot.model.weather.ForecastWeatherInfo;
 import com.zaytsevp.weathertelegrambot.model.weather.WeatherInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,5 +41,10 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public WeatherInfo getWeatherInfoByCityCoords(Double lat, Double lng) {
         return openWeatherFeignClient.getWeatherInfoByCoords(lat, lng, appId, units, lang);
+    }
+
+    @Override
+    public ForecastWeatherInfo getForecastWeatherInfoByCoords(Double lat, Double lng) {
+        return openWeatherFeignClient.getForecastWeatherInfoByCoords(lat, lng, appId, units, lang);
     }
 }

@@ -36,6 +36,7 @@ public class ZaytsevPWeatherBot extends TelegramLongPollingBot {
 
             SendMessage message = new SendMessage().setChatId(update.getMessage().getChatId())
                                                    .setText(weatherInfo);
+
             try {
                 execute(message);
             } catch (TelegramApiException e) {
