@@ -2,18 +2,21 @@ package com.zaytsevp.weathertelegrambot.util;
 
 import com.zaytsevp.weathertelegrambot.model.telegram.MessageParameterType;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.Map;
 
-public class MessageParserTest {
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+class MessageParserTest {
 
     private final String city = "Хабаровск";
 
     private final String param = "завтра";
 
     @Test
-    public void getWeatherParams() {
+    void getWeatherParams() {
         // Actual
         Map<MessageParameterType, String> actualResult = MessageParser.getWeatherParams(city + " " + param);
 
@@ -24,7 +27,7 @@ public class MessageParserTest {
     }
 
     @Test
-    public void getWeatherParamsOnlyCity() {
+    void getWeatherParamsOnlyCity() {
         // Actual
         Map<MessageParameterType, String> actualResult = MessageParser.getWeatherParams(city);
 
@@ -33,5 +36,12 @@ public class MessageParserTest {
         Assertions.assertThat(actualResult.get(MessageParameterType.CITY)).isEqualTo(city);
     }
 
-    //TODO Тут тест на исключение + JUnit5
+    @Test
+    void getWeatherWithInputParamIsNull() {
+        // Actual
+        Executable exec = () -> MessageParser.getWeatherParams(null);
+
+        // Assertion
+        assertThrows(IllegalArgumentException.class, exec);
+    }
 }

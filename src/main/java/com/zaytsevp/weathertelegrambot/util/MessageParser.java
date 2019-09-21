@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.zaytsevp.weathertelegrambot.model.telegram.MessageParameterType;
 import lombok.experimental.UtilityClass;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -15,13 +16,18 @@ import java.util.Map;
 @UtilityClass
 public class MessageParser {
 
+    private static final String INCORRECT_INPUT_PARAMS = "Некорректные параметры запроса";
+
     public static Map<MessageParameterType, String> getWeatherParams(String inputRawMessageString) {
+        // TODO: вынести в утили все базовые проверки + механизм ErrorInfo для инф. об ошибке
+        if (StringUtils.isEmpty(inputRawMessageString)) {
+            throw new IllegalArgumentException("Не передано название города!");
+        }
+
         List<String> params = Lists.newArrayList(Splitter.on(" ")
                                                          .trimResults()
                                                          .omitEmptyStrings()
                                                          .split(inputRawMessageString));
-
-        if (params.size() == 0) throw new IllegalArgumentException("Не передано название города!");
 
         if (params.size() == 1) {
             return ImmutableMap.of(MessageParameterType.CITY, params.get(0));
