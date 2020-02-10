@@ -8,7 +8,14 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Pavel Zaytsev
@@ -34,8 +41,25 @@ public class ZaytsevPWeatherBot extends TelegramLongPollingBot {
 
             String weatherInfo = getWeatherInfo(update);
 
+            // Попытка поиграться с клавиатурой
+            ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+            List<KeyboardRow> keyboard = new ArrayList<>();
+            KeyboardRow row = new KeyboardRow();
+
+
+            KeyboardButton getWeatherButton = new KeyboardButton("\uD83C\uDF1D Узнать погоду");
+            KeyboardButton setCityButton = new KeyboardButton("\u1F4CD Задать город по умолчанию");
+
+
+            row.add(getWeatherButton);
+            row.add(setCityButton);
+
+            keyboard.add(row);
+            keyboardMarkup.setKeyboard(keyboard);
+
             SendMessage message = new SendMessage().setChatId(update.getMessage().getChatId())
-                                                   .setText(weatherInfo);
+                                                   .setText(weatherInfo)
+                                                   .setReplyMarkup(keyboardMarkup);
 
             try {
                 execute(message);
