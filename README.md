@@ -2,6 +2,8 @@
 
 Bot using this [Java-library](https://github.com/rubenlagus/TelegramBots)
 
+![screenshot](https://github.com/Paz1506/weather-telegram-bot/blob/master/screenshot.JPG)
+
 <h3>How use?</h3>
 
 * find bot in Telegram by name **@ZaytsevPWeatherBot** (t.me/ZaytsevPWeatherBot)
